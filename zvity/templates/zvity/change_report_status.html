@@ -1,0 +1,11 @@
+<!-- change_report_status.html -->
+<form method="POST">
+  {% csrf_token %}
+  <label for="status">Change Status:</label>
+  <select name="status">
+    <option value="Open">Open</option>
+    <option value="In Progress">In Progress</option>
+    <option value="Closed">Closed</option>
+  </select>
+  <button type="submit">Change Status</button>
+</form>

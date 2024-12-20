@@ -103,3 +103,36 @@ class ReportBusinessLogicTests(TestCase):
 
         with self.assertRaises(PermissionDenied):
             can_delete_report(non_owner_user, self.report)
+
+
+class ReportStatusChangeTestCase(TestCase):
+    def setUp(self):
+        """Set up users and a sample report."""
+        self.staff_user = User.objects.create_user(
+            username="staff", password="password", is_staff=True
+        )
+        self.regular_user = User.objects.create_user(
+            username="regular", password="password"
+        )
+
+        # Create profiles manually for the users
+        self.staff_user.profile = Profile.objects.create(user=self.staff_user)
+        self.regular_user.profile = Profile.objects.create(user=self.regular_user)
+
+        # Create a sample report
+        self.report = Reports.objects.create(
+            title="Test Report",
+            description="This is a test report.",
+            status="Open",
+            owner=self.regular_user.profile,
+        )
+
+    def test_staff_can_change_status(self):
+        """Test that a staff user can change the status of a report."""
+        self.client.login(username="staff", password="password")
+        response = self.client.post(
+            reverse("change-report-status", args=[self.report.id]), {"status": "Closed"}
+        )
+        self.report.refresh_from_db()
+        self.assertEqual(self.report.status, "Closed")
+        self.assertRedirects(response, reverse("home"))

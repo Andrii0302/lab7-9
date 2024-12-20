@@ -10,13 +10,25 @@
     <ul>
       {% for report in reports %}
       <li>
-        <strong>{{ report.owner }}</strong><br />
+        <strong>{{ report.owner.username }}</strong><br />
         <strong>{{ report.title }}</strong><br />
         {{ report.description }}<br />
         <em>Status: {{ report.status }}</em><br />
         {% if report.owner == request.user.profile or request.user.is_staff %}
         <a href="{% url 'delete-report' report.id %}">Delete</a>
         {% endif %}
+        {% if user.is_staff %}
+    <form method="POST" action="{% url 'change-report-status' report.id %}">
+      {% csrf_token %}
+      <label for="status">Change Status:</label>
+      <select name="status">
+        <option value="Open" {% if report.status == 'Open' %}selected{% endif %}>Open</option>
+        <option value="In Progress" {% if report.status == 'In Progress' %}selected{% endif %}>In Progress</option>
+        <option value="Closed" {% if report.status == 'Closed' %}selected{% endif %}>Closed</option>
+      </select>
+      <button type="submit">Change Status</button>
+    </form>
+  {% endif %}
       </li>
       {% empty %}
       <li>No reports available.</li>

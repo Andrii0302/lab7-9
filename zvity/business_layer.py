@@ -14,3 +14,12 @@ def can_delete_report(user, report: Reports) -> bool:
     if report.owner == user.profile:  # Owner can delete their own report
         return True
     raise PermissionDenied("You do not have permission to delete this report.")
+
+
+def can_change_status(user, report):
+    """Check if a user can change the status of a report."""
+    if not user.is_staff:
+        raise PermissionDenied(
+            "You do not have permission to change the report status."
+        )
+    return True
