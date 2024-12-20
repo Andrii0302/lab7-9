@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{% block title %}Aes project{% endblock %}</title>
+  </head>
+  <body>
+    <!-- Шапка -->
+    <header
+      style="
+        background-color: #007bff;
+        color: white;
+        padding: 1rem;
+        text-align: center;
+      "
+    >
+      <h1>AES Project</h1>
+    </header>
+
+    <!-- Основний вміст -->
+    <main style="padding: 1rem">
+      {% block content %}
+      <p>AES</p>
+      {% endblock %}
+    </main>
+
+    <!-- Футер -->
+    <footer
+      style="
+        background-color: #333;
+        color: white;
+        text-align: center;
+        padding: 1rem;
+        margin-top: 2rem;
+      "
+    >
+      <p>© 2024 AES. Всі права захищено.</p>
+    </footer>
+  </body>
+</html>

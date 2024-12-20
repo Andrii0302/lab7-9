@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Reports</title>
+  </head>
+  <body>
+    <h1>All Reports</h1>
+    <ul>
+      {% for report in reports %}
+      <li>
+        <strong>{{ report.title }}</strong><br />
+        {{ report.description }}<br />
+        <em>Status: {{ report.status }}</em>
+      </li>
+      {% empty %}
+      <li>No reports available.</li>
+      {% endfor %}
+    </ul>
+  </body>
+</html>
