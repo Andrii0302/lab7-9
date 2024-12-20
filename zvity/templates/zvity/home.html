@@ -10,9 +10,13 @@
     <ul>
       {% for report in reports %}
       <li>
+        <strong>{{ report.owner }}</strong><br />
         <strong>{{ report.title }}</strong><br />
         {{ report.description }}<br />
-        <em>Status: {{ report.status }}</em>
+        <em>Status: {{ report.status }}</em><br />
+        {% if report.owner == request.user.profile or request.user.is_staff %}
+        <a href="{% url 'delete-report' report.id %}">Delete</a>
+        {% endif %}
       </li>
       {% empty %}
       <li>No reports available.</li>
